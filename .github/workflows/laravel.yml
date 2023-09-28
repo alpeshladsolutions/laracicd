@@ -27,6 +27,17 @@ jobs:
       - name: Generate application key
         run: php artisan key:generate
       
+      - name: Set Environment Variables
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          echo "DB_HOST=${DB_HOST}" >> .env
+          echo "DB_DATABASE=${DB_DATABASE}" >> .env
+          echo "DB_USERNAME=${DB_USERNAME}" >> .env
+          echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
       # - name: Run migration
       #   run: php artisan migrate
 
