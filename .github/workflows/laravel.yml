@@ -3,7 +3,7 @@ name: Laravel Test
 on:
   push:
     branches:
-      - main  # You can change this to your main branch name
+      - master  # You can change this to your main branch name
 
 jobs:
   laravel-test:
