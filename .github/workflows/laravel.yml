@@ -1,47 +1,17 @@
-name: Laravel Test
-
-on:
-  push:
-    branches:
-      - master  # You can change this to your main branch name
-
+on: push
+name: 🚀 Deploy website on push
 jobs:
-  laravel-test:
-    runs-on: ubuntu-latest  # You can choose a different OS if needed
-
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2  # Checks out your repository code
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2  # Sets up the PHP version
-        with:
-          php-version: 8.2.16
-
-      - name: Install Composer dependencies
-        run: composer install
-
-      - name: Copy .env.example
-        run: cp .env.example .env
-
-      - name: Generate application key
-        run: php artisan key:generate
-      
-      - name: Set Environment Variables
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: |
-          echo "DB_HOST=${DB_HOST}" >> .env
-          echo "DB_DATABASE=${DB_DATABASE}" >> .env
-          echo "DB_USERNAME=${DB_USERNAME}" >> .env
-          echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
-
-          
-      # - name: Run migration
-      #   run: php artisan migrate
-
-      # - name: Run Laravel tests
-      #   run: php artisan test
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2.3.2
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        server: ${{ secrets.DB_HOST }}
+        username: ${{ secrets.DB_USERNAME }}
+        password: ${{ secrets.DB_PASSWORD }}
+        server-dir: /htdocs
